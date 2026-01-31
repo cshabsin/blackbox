@@ -36,12 +36,31 @@ export default function CreditsOverlay({ onClose }: CreditsOverlayProps) {
                     <div className="flex-1 overflow-y-auto space-y-12 pr-4 custom-scrollbar">
                         <section>
                             <h3 className="text-xs font-bold text-gray-500 uppercase tracking-[0.3em] mb-4">Original Game</h3>
-                            <div className="space-y-2">
-                                <p className="text-2xl text-gray-300 font-serif">Original concept by <span className="text-white font-bold">Eric Solomon</span> (1977).</p>
-                                <p className="text-lg text-gray-400">Popularized in <span className="text-gray-200">BASIC Computer Games</span>, edited by David H. Ahl.</p>
-                                <p className="text-md text-gray-500 pt-2 italic">
-                                    Original BASIC source code included for historical reference.
-                                </p>
+                            <div className="space-y-4">
+                                <div>
+                                    <p className="text-2xl text-gray-300 font-serif">Original concept by <span className="text-white font-bold">Eric Solomon</span> (1977).</p>
+                                    <p className="text-lg text-gray-400">Popularized in <span className="text-gray-200">BASIC Computer Games</span>, edited by David H. Ahl.</p>
+                                </div>
+                                
+                                <div className="border border-gray-800 rounded bg-black p-4 inline-block">
+                                    <img src="blackbox.gif" alt="Original Blackbox Documentation" className="max-w-full h-auto opacity-80 hover:opacity-100 transition-opacity" />
+                                    <p className="text-xs text-gray-600 mt-2 text-center italic">Original documentation from "More BASIC Computer Games"</p>
+                                </div>
+
+                                <div className="text-sm text-gray-500 space-y-1">
+                                    <p>
+                                        Original source code retrieved from: <br/>
+                                        <a href="https://www.roug.org/retrocomputing/languages/basic/morebasicgames" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-400 underline decoration-blue-500/30">
+                                            roug.org/retrocomputing/languages/basic/morebasicgames
+                                        </a>
+                                    </p>
+                                    <p>
+                                        Documentation image courtesy of: <br/>
+                                        <a href="https://www.atariarchives.org/morebasicgames/showpage.php?page=10" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-400 underline decoration-blue-500/30">
+                                            atariarchives.org
+                                        </a>
+                                    </p>
+                                </div>
                             </div>
                         </section>
 
