@@ -46,7 +46,7 @@ export default function CreditsOverlay({ onClose }: CreditsOverlayProps) {
                                 <div className="space-y-4">
                                     <button 
                                         onClick={() => setShowDocs(!showDocs)}
-                                        className="text-xs font-bold text-gray-500 hover:text-gray-300 flex items-center gap-2 uppercase tracking-widest border border-gray-800 px-3 py-2 rounded transition-colors"
+                                        className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded font-bold tracking-widest transition-all shadow-[0_0_10px_rgba(59,130,246,0.5)] text-xs uppercase"
                                     >
                                         {showDocs ? '▼ Hide Original Documentation' : '▶ Show Original Documentation'}
                                     </button>
