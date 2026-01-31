@@ -226,14 +226,61 @@ export default function Game() {
         <div className="flex flex-col md:flex-row gap-8">
           <div className="flex flex-col items-center gap-4">
             {/* Grid Container */}
-            <div className="grid grid-cols-10 gap-0 border-4 border-gray-800 bg-gray-300 p-2">
-              {/* Generate 10x10 cells. x=0..9 (col), y=0..9 (row) */}
-              {/* Wait, CSS Grid is Row-Major usually. Map Rows (y), then Cols (x). */}
-              {Array.from({ length: 10 }).map((_, y) => (
-                <React.Fragment key={y}>
-                  {Array.from({ length: 10 }).map((_, x) => renderCell(x, y))}
-                </React.Fragment>
-              ))}
+            <div className="relative">
+              <div className="grid grid-cols-10 gap-0 border-4 border-gray-800 bg-gray-300 p-2 relative z-10">
+                {/* Generate 10x10 cells. x=0..9 (col), y=0..9 (row) */}
+                {/* Wait, CSS Grid is Row-Major usually. Map Rows (y), then Cols (x). */}
+                {Array.from({ length: 10 }).map((_, y) => (
+                  <React.Fragment key={y}>
+                    {Array.from({ length: 10 }).map((_, x) => renderCell(x, y))}
+                  </React.Fragment>
+                ))}
+              </div>
+              
+              {/* Ray Paths Overlay */}
+              {gameState === 'GAMEOVER' && (
+                <svg className="absolute top-2 left-2 w-[400px] h-[400px] pointer-events-none z-20 overflow-visible">
+                  {rays.map((ray, i) => {
+                    if (!ray.path || ray.path.length === 0) return null;
+                    
+                    // Determine color based on ray type
+                    let strokeColor = "black";
+                    if (ray.type === 'ABSORBED') strokeColor = "black";
+                    else if (ray.type === 'REFLECTED') strokeColor = "#facc15"; // yellow-400
+                    else if (ray.type === 'EXIT') {
+                      // Extract color from Tailwind class (rough approximation for SVG)
+                      // COLORS is like 'bg-red-500'. We map index to a hex or similar.
+                      // Simpler: Use a mapped array of hex colors or currentcolor with a class?
+                      // SVG stroke doesn't support Tailwind bg- classes directly without 'stroke-current' and 'text-xxx'.
+                      // Let's use a helper or just mapping.
+                      const TAILWIND_COLORS_HEX = [
+                        '#ef4444', '#3b82f6', '#22c55e', '#eab308', 
+                        '#a855f7', '#ec4899', '#6366f1', '#14b8a6',
+                        '#f97316', '#06b6d4', '#84cc16', '#10b981',
+                        '#8b5cf6', '#d946ef', '#f43f5e', '#0ea5e9'
+                      ];
+                      strokeColor = TAILWIND_COLORS_HEX[i % TAILWIND_COLORS_HEX.length];
+                    }
+
+                    // Convert grid coordinates to pixels
+                    // Cell size is 40px (w-10). Center is at 20px.
+                    const points = ray.path.map(p => `${p.x * 40 + 20},${p.y * 40 + 20}`).join(' ');
+
+                    return (
+                      <polyline 
+                        key={i} 
+                        points={points} 
+                        fill="none" 
+                        stroke={strokeColor} 
+                        strokeWidth="4" 
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        opacity="0.6"
+                      />
+                    );
+                  })}
+                </svg>
+              )}
             </div>
 
             {gameState === 'PLAYING' && (
