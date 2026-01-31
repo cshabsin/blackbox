@@ -8,6 +8,7 @@ interface CreditsOverlayProps {
 
 export default function CreditsOverlay({ onClose }: CreditsOverlayProps) {
     const [viewSource, setViewSource] = useState(false);
+    const [showDocs, setShowDocs] = useState(false);
     const [sourceCode, setSourceCode] = useState<string>('Loading source...');
 
     useEffect(() => {
@@ -42,9 +43,20 @@ export default function CreditsOverlay({ onClose }: CreditsOverlayProps) {
                                     <p className="text-lg text-gray-400">Popularized in <span className="text-gray-200">BASIC Computer Games</span>, edited by David H. Ahl.</p>
                                 </div>
                                 
-                                <div className="border border-gray-800 rounded bg-black p-4 inline-block">
-                                    <img src="blackbox.gif" alt="Original Blackbox Documentation" className="max-w-full h-auto opacity-80 hover:opacity-100 transition-opacity" />
-                                    <p className="text-xs text-gray-600 mt-2 text-center italic">Original documentation from "More BASIC Computer Games"</p>
+                                <div className="space-y-4">
+                                    <button 
+                                        onClick={() => setShowDocs(!showDocs)}
+                                        className="text-xs font-bold text-gray-500 hover:text-gray-300 flex items-center gap-2 uppercase tracking-widest border border-gray-800 px-3 py-2 rounded transition-colors"
+                                    >
+                                        {showDocs ? '▼ Hide Original Documentation' : '▶ Show Original Documentation'}
+                                    </button>
+
+                                    {showDocs && (
+                                        <div className="border border-gray-800 rounded bg-black p-4 inline-block">
+                                            <img src="blackbox.gif" alt="Original Blackbox Documentation" className="max-w-full h-auto opacity-80 hover:opacity-100 transition-opacity" />
+                                            <p className="text-xs text-gray-600 mt-2 text-center italic">Original documentation from "More BASIC Computer Games"</p>
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div className="text-sm text-gray-500 space-y-1">
