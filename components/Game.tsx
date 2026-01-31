@@ -115,15 +115,17 @@ export default function Game() {
 
   // Render Grid Cell
   const renderCell = (x: number, y: number) => {
+    const cellSizeClass = "w-[min(40px,6.5vw)] h-[min(40px,6.5vw)] md:w-10 md:h-10";
+    
     // Corners
     if ((x === 0 || x === 9) && (y === 0 || y === 9)) {
-      return <div key={`${x}-${y}`} className="w-10 h-10"></div>;
+      return <div key={`${x}-${y}`} className={cellSizeClass}></div>;
     }
 
     // Border (Ray Entry/Exit)
     if (x === 0 || x === 9 || y === 0 || y === 9) {
       const info = getRayInfo(x, y);
-      if (!info) return <div key={`${x}-${y}`} />;
+      if (!info) return <div key={`${x}-${y}`} className={cellSizeClass} />;
 
       const { rayId, firedRay, exitRay } = info;
       
@@ -159,7 +161,7 @@ export default function Game() {
         <div 
           key={`${x}-${y}`} 
           onClick={() => !firedRay && !exitRay && gameState === 'PLAYING' && handleFireRay(rayId)}
-          className={`w-10 h-10 flex items-center justify-center border border-gray-400 text-xs font-bold ${bgClass} ${cursor}`}
+          className={`${cellSizeClass} flex items-center justify-center border border-gray-400 text-[10px] md:text-xs font-bold ${bgClass} ${cursor}`}
         >
           {text}
         </div>
@@ -189,10 +191,10 @@ export default function Game() {
       <div 
         key={`${x}-${y}`}
         onClick={() => toggleGuess(x, y)}
-        className={`w-10 h-10 border border-gray-300 flex items-center justify-center cursor-pointer hover:bg-gray-100 ${cellBg}`}
+        className={`${cellSizeClass} border border-gray-300 flex items-center justify-center cursor-pointer hover:bg-gray-100 ${cellBg}`}
       >
-        {showAtom && <span className="text-xl">●</span>}
-        {!showAtom && isGuessed && <span className="text-blue-600 text-xl">?</span>}
+        {showAtom && <span className="text-lg md:text-xl">●</span>}
+        {!showAtom && isGuessed && <span className="text-blue-600 text-lg md:text-xl">?</span>}
       </div>
     );
   };
@@ -241,7 +243,7 @@ export default function Game() {
 
                 {/* Ray Paths Overlay */}
                 {gameState === 'GAMEOVER' && (
-                  <svg className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-visible" viewBox="0 0 400 400">
+                  <svg className="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-visible" viewBox="0 0 100 100" preserveAspectRatio="none">
                     {rays.map((ray, i) => {
                       if (!ray.path || ray.path.length === 0) return null;
 
@@ -264,9 +266,9 @@ export default function Game() {
                         strokeColor = TAILWIND_COLORS_HEX[i % TAILWIND_COLORS_HEX.length];
                       }
 
-                      // Convert grid coordinates to pixels
-                      // Cell size is 40px (w-10). Center is at 20px.
-                      const points = ray.path.map(p => `${p.x * 40 + 20},${p.y * 40 + 20}`).join(' ');
+                      // Convert grid coordinates to 0-100 system
+                      // Cell size is 10x10 units. Center is 5 units offset.
+                      const points = ray.path.map(p => `${p.x * 10 + 5},${p.y * 10 + 5}`).join(' ');
 
                       return (
                         <polyline
@@ -274,7 +276,7 @@ export default function Game() {
                           points={points}
                           fill="none"
                           stroke={strokeColor}
-                          strokeWidth="4"
+                          strokeWidth="1"
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           opacity="0.6"
