@@ -173,16 +173,18 @@ export default function Game() {
     const showAtom = gameState === 'GAMEOVER' && isAtom;
     
     let cellBg = "bg-white";
-    if (showAtom) cellBg = "bg-black text-white"; // Real atom revealed
-    else if (isGuessed) cellBg = "bg-blue-200"; // Guess marked
-
-    // Check if guessed wrong (only show at game over)
-    if (gameState === 'GAMEOVER' && isGuessed && !isAtom) {
-      cellBg = "bg-red-400"; // Wrong guess
-    }
     
-    // Debug: show atoms during play (cheat)
-    // if (isAtom) cellBg = "bg-red-100"; 
+    if (gameState === 'GAMEOVER') {
+        if (isAtom && isGuessed) {
+            cellBg = "bg-green-600 text-white"; // Correctly guessed atom
+        } else if (isAtom && !isGuessed) {
+            cellBg = "bg-black text-white"; // Missed atom
+        } else if (!isAtom && isGuessed) {
+            cellBg = "bg-red-400"; // Wrong guess
+        }
+    } else {
+        if (isGuessed) cellBg = "bg-blue-200"; // Guess marked during play
+    }
 
     return (
       <div 
