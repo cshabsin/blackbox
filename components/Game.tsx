@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   createEmptyGrid, 
   placeAtoms, 
@@ -77,10 +77,9 @@ export default function Game() {
     });
 
     // Guess scores
-    let correctGuesses = 0;
     guesses.forEach(g => {
       if (grid[g.x][g.y] === 1) {
-        correctGuesses++;
+        // Correct guess (no penalty)
       } else {
         currentScore += 5; // Penalty for wrong guess
       }
@@ -118,7 +117,7 @@ export default function Game() {
   const renderCell = (x: number, y: number) => {
     // Corners
     if ((x === 0 || x === 9) && (y === 0 || y === 9)) {
-      return <div key={`${x}-${y}`} className="w-full aspect-square"></div>;
+      return <div key={`${x}-${y}`} className="w-10 h-10"></div>;
     }
 
     // Border (Ray Entry/Exit)
@@ -160,7 +159,7 @@ export default function Game() {
         <div 
           key={`${x}-${y}`} 
           onClick={() => !firedRay && !exitRay && gameState === 'PLAYING' && handleFireRay(rayId)}
-          className={`w-full aspect-square flex items-center justify-center border border-gray-400 text-xs font-bold ${bgClass} ${cursor}`}
+          className={`w-10 h-10 flex items-center justify-center border border-gray-400 text-xs font-bold ${bgClass} ${cursor}`}
         >
           {text}
         </div>
@@ -190,7 +189,7 @@ export default function Game() {
       <div 
         key={`${x}-${y}`}
         onClick={() => toggleGuess(x, y)}
-        className={`w-full aspect-square border border-gray-300 flex items-center justify-center cursor-pointer hover:bg-gray-100 ${cellBg}`}
+        className={`w-10 h-10 border border-gray-300 flex items-center justify-center cursor-pointer hover:bg-gray-100 ${cellBg}`}
       >
         {showAtom && <span className="text-xl">●</span>}
         {!showAtom && isGuessed && <span className="text-blue-600 text-xl">?</span>}

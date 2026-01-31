@@ -54,7 +54,7 @@ export default function CreditsOverlay({ onClose }: CreditsOverlayProps) {
                                     {showDocs && (
                                         <div className="border border-gray-800 rounded bg-black p-4 inline-block">
                                             <img src="blackbox.gif" alt="Original Blackbox Documentation" className="max-w-full h-auto opacity-80 hover:opacity-100 transition-opacity" />
-                                            <p className="text-xs text-gray-600 mt-2 text-center italic">Original documentation from "More BASIC Computer Games"</p>
+                                            <p className="text-xs text-gray-600 mt-2 text-center italic">Original documentation from &quot;More BASIC Computer Games&quot;</p>
                                         </div>
                                     )}
                                 </div>
